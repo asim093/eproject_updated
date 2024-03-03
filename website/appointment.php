@@ -29,15 +29,21 @@ $product_result = mysqli_query($conn, $product_query);
 $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
 
 
-?>
+
 
 // session_start();
 
 
-// Retrieve form data
 
 
 
+$service_category = isset($_POST['service_category']) ? $_POST['service_category'] : '';
+    $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
+    $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : '';
+    $user_email = isset($_POST['user_email']) ? $_POST['user_email'] : '';
+    $appointment_date = isset($_POST['appointment_date']) ? $_POST['appointment_date'] : '';
+    $appointment_time = isset($_POST['appointment_time']) ? $_POST['appointment_time'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -216,7 +222,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
             data-wow-delay="0.6s">
             <h1 class="text-white mb-4">Make Appointment</h1>
 
-            <form action="admin-panel-data.php" method="post">
+            <form action="../admin-panel/themewagon.github.io/dashmin/appointments.php" method="post">
 
               <div class="row g-3">
                 <div class="col-md-6">
