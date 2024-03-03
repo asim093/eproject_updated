@@ -3,6 +3,33 @@ session_start();
 include "config.php";
 include "appointment_check.php";
 
+// session_start();
+include "config.php";
+include "appointment_check.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Check if all fields are filled
+  if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
+    echo "<script>alert('Please fill in all fields')</script>";
+  } else {
+    // Sanitize input data
+    $service_category = mysqli_real_escape_string($conn, $_POST['service_category']);
+    $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+    $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
+    $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
+    $appointment_date = mysqli_real_escape_string($conn, $_POST['appointment_date']);
+    $appointment_time = mysqli_real_escape_string($conn, $_POST['appointment_time']);
+
+    $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES ('$service_category', '$product_name', '$user_name', '$user_email', '$appointment_date', '$appointment_time')";
+
+    if (mysqli_query($conn, $insert_query)) {
+      echo "<script>alert('Your appointment has been booked successfully')</script>";
+    } else {
+      echo "<script>alert('Error: " . mysqli_error($conn) . "')</script>";
+    }
+  }
+}
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
   echo "<script>alert('Please log in first')</script>";
@@ -35,15 +62,11 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
 
 
 
-
-
-$service_category = isset($_POST['service_category']) ? $_POST['service_category'] : '';
-    $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
-    $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : '';
-    $user_email = isset($_POST['user_email']) ? $_POST['user_email'] : '';
-    $appointment_date = isset($_POST['appointment_date']) ? $_POST['appointment_date'] : '';
-    $appointment_time = isset($_POST['appointment_time']) ? $_POST['appointment_time'] : '';
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -222,7 +245,7 @@ $service_category = isset($_POST['service_category']) ? $_POST['service_category
             data-wow-delay="0.6s">
             <h1 class="text-white mb-4">Make Appointment</h1>
 
-            <form action="../admin-panel/themewagon.github.io/dashmin/appointments.php" method="post">
+            <form action="#" method="post">
 
               <div class="row g-3">
                 <div class="col-md-6">
@@ -267,9 +290,10 @@ $service_category = isset($_POST['service_category']) ? $_POST['service_category
                   <div class="date" id="date1" data-target-input="nearest">
                     <input type="text" class="form-control bg-light border-0 datetimepicker-input"
                       name="appointment_date" placeholder="Appointment Date" data-target="#date1"
-                      data-toggle="datetimepicker" style="height: 55px" required />
+                      data-toggle="datetimepicker" style="height: 55px;" required />
                   </div>
                 </div>
+
                 <div class="col-12 col-sm-6 mt-4">
                   <div class="time" id="time1" data-target-input="nearest">
                     <input type="text" class="form-control bg-light border-0 datetimepicker-input"
@@ -290,6 +314,7 @@ $service_category = isset($_POST['service_category']) ? $_POST['service_category
       </div>
     </div>
   </div>
+  <!-- Appointment End -->
   <!-- Appointment End -->
 
   <!-- Newsletter Start -->

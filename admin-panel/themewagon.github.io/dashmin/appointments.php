@@ -1,33 +1,41 @@
 <?php
-// include("../../../website/admin-panel-data.php");
+include "config.php";
 
-$service_category = "";
-$product_name = "";
-$user_name = "";
-$user_email = "";
-$appointment_date = "";
-$appointment_time = "";
+// Check if the delete button is clicked
+if (isset($_GET['delete_id'])) {
+    // Get the ID of the row to be deleted
+    $delete_id = $_GET['delete_id'];
+    
+    // Construct the delete query
+    $delete_query = "DELETE FROM appointment WHERE id = ?";
+    
+    // Prepare the delete statement
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bind_param("i", $delete_id);
+    
+    // Execute the delete statement
+    if ($stmt->execute()) {
+        // Redirect to the same page after deletion
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
 
-// Check if the variables are set before using them
-if (isset($_POST['service_category'])) {
-    $service_category = $_POST['service_category'];
-}
-if (isset($_POST['product_name'])) {
-    $product_name = $_POST['product_name'];
-}
-if (isset($_POST['user_name'])) {
-    $user_name = $_POST['user_name'];
-}
-if (isset($_POST['user_email'])) {
-    $user_email = $_POST['user_email'];
-}
-if (isset($_POST['appointment_date'])) {
-    $appointment_date = $_POST['appointment_date'];
-}
-if (isset($_POST['appointment_time'])) {
-    $appointment_time = $_POST['appointment_time'];
+$sql = "SELECT * FROM appointment";
+
+// Execute SQL query
+$result = $conn->query($sql);
+
+$data = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -229,58 +237,57 @@ if (isset($_POST['appointment_time'])) {
 
 
             <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4" style="width: 100%;">
+
                 <div class="row g-4">
                     <div class="col-12">
-                        <div class="charts user_table text-center bg-light rounded h-100 p-4">
+                        <div class="charts user_table text-center bg-light rounded h-100 p-4" style="width:100%" !important >
                             <h6 class="mb-4">SRS Appointment Table</h6>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Service Category</th>
-                                        <th scope="col">Product Name</th>
                                         <th scope="col">User Name</th>
                                         <th scope="col">User Email</th>
-                                        <th scope="col">Appointment Date</th>
-                                        <th scope="col">Appointment Time</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Service Category</th>
+                                        <th scope="col">Tester Name</th>
+                                        <!-- <th scope="col">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>
-                                            <?php echo isset($service_category) ? $service_category : ''; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo isset($product_name) ? $product_name : ''; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo isset($user_name) ? $user_name : ''; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo isset($user_email) ? $user_email : ''; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo isset($appointment_date) ? $appointment_date : ''; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo isset($appointment_time) ? $appointment_time : ''; ?>
-                                        </td>
-                                        <td><a href="#">Edit</a></td>
-                                        <td><a href="#">Delete</a></td>
-                                    </tr>
+                                    <?php
+                                    // Assuming you have fetched the data from the database and stored it in an array called $data
+                                    // Replace this with your actual data fetching logic
+                                    
 
+
+                                    // Iterate over the data and populate the table rows
+                                    foreach ($data as $row) {
+                                        echo "<tr>";
+                                        echo "<th scope='row'>" . $row["id"] . "</th>";
+                                        echo "<td>" . $row["user_name"] . "</td>";
+                                        echo "<td>" . $row["user_email"] . "</td>";
+                                        echo "<td>" . $row["product_name"] . "</td>";
+                                        echo "<td>" . $row["created_at"] . "</td>";
+                                        echo "<td>" . $row["service_category"] . "</td>";
+                                        echo "<td>" . $row["tester_name"] . "</td>";
+                                        echo "<td>
+                                        <a href='table-tester.php?id=" . $row["id"] . "'>Assign Tester</a>
+                                        <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>
+                </td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            </tbody>
-            </table>
+            <!-- Table End -->
+
         </div>
     </div>
     <!-- <div class="col-sm-12 col-xl-6">
@@ -554,4 +561,3 @@ if (isset($_POST['appointment_time'])) {
 <!-- Mirrored from themewagon.github.io/dashmin/table.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
 
 </html>
-
