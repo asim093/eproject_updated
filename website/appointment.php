@@ -3,32 +3,40 @@ session_start();
 include "config.php";
 include "appointment_check.php";
 
-// session_start();
-include "config.php";
-include "appointment_check.php";
-
+// Check if the form is submitted
+// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Check if all fields are filled
   if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
-    echo "<script>alert('Please fill in all fields')</script>";
+      echo "<script>alert('Please fill in all fields')</script>";
   } else {
-    // Sanitize input data
-    $service_category = mysqli_real_escape_string($conn, $_POST['service_category']);
-    $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
-    $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
-    $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
-    $appointment_date = mysqli_real_escape_string($conn, $_POST['appointment_date']);
-    $appointment_time = mysqli_real_escape_string($conn, $_POST['appointment_time']);
+      // Sanitize input data
+      $service_category = mysqli_real_escape_string($conn, $_POST['service_category']);
+      $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+      $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
+      $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
+      $appointment_date = mysqli_real_escape_string($conn, $_POST['appointment_date']);
+      $appointment_time = mysqli_real_escape_string($conn, $_POST['appointment_time']);
 
-    $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES ('$service_category', '$product_name', '$user_name', '$user_email', '$appointment_date', '$appointment_time')";
+      // Insert the appointment into the database
+      $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES ('$service_category', '$product_name', '$user_name', '$user_email', '$appointment_date', '$appointment_time')";
 
-    if (mysqli_query($conn, $insert_query)) {
-      echo "<script>alert('Your appointment has been booked successfully')</script>";
-    } else {
-      echo "<script>alert('Error: " . mysqli_error($conn) . "')</script>";
-    }
+      if (mysqli_query($conn, $insert_query)) {
+          // Fetch the auto-generated ID
+          $appointment_id = mysqli_insert_id($conn);
+          // Format the ID to have leading zeros to make it a 10-character code
+          $appointment_code = str_pad($appointment_id, 10, '0', STR_PAD_LEFT);
+          // Update the appointment with the zero-padded ID
+          mysqli_query($conn, "UPDATE appointment SET id='$appointment_code' WHERE id='$appointment_id'");
+          echo "<script>alert('Your appointment has been booked successfully. Your appointment code is: $appointment_code')</script>";
+      } else {
+          echo "<script>alert('Error: " . mysqli_error($conn) . "')</script>";
+      }
   }
 }
+
+
+  
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
