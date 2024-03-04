@@ -101,24 +101,23 @@ session_start();
       </div>
 
       <div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
-    <?php
-    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-        echo "<div class='dropdown-menu m-0'>";
-        echo "<a href='user_logout.php' class='dropdown-item'>Logout</a>";
-        echo "</div>";
-    } else {
-        echo "<div class='dropdown-menu m-0'>";
-        echo "<a href='#' onclick=\"popup('login-popup')\" class='dropdown-item'>Login</a>";
-        echo "<a href='#' onclick=\"popup('register-popup')\" class='dropdown-item'>Register</a>";
-        echo "</div>";
-    }
-    ?>
-</div>
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
+        <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+          echo "<div class='dropdown-menu m-0'>";
+          echo "<a href='user_logout.php' class='dropdown-item'>Logout</a>";
+          echo "</div>";
+        } else {
+          echo "<div class='dropdown-menu m-0'>";
+          echo "<a href='#' onclick=\"popup('login-popup')\" class='dropdown-item'>Login</a>";
+          echo "<a href='#' onclick=\"popup('register-popup')\" class='dropdown-item'>Register</a>";
+          echo "</div>";
+        }
+        ?>
+      </div>
 
 
-      <a href="appointment.php"
-        class="btn btn-primary py-2 px-4 ms-3">Appointment</a>
+      <a href="appointment.php" class="btn btn-primary py-2 px-4 ms-3">Appointment</a>
     </div>
     </div>
   </nav>
