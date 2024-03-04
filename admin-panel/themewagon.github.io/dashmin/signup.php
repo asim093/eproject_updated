@@ -2,7 +2,7 @@
 <html lang="en">
 
 
-<!-- Mirrored from themewagon.github.io/dashmin/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
+<!-- Mirrored from themewagon.github.io/dashmin/signup.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
 <!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 
@@ -14,7 +14,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.html" rel="icon">
+    <link href="img/favicon.php" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -54,7 +54,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index-2.html" class="">
+                            <a href="index-2.php" class="">
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
                             </a>
                             <h3>Sign Up</h3>
@@ -105,7 +105,7 @@
 </body>
 
 
-<!-- Mirrored from themewagon.github.io/dashmin/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
+<!-- Mirrored from themewagon.github.io/dashmin/signup.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
 
 </html>
 
