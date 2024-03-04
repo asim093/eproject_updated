@@ -19,11 +19,11 @@ if(isset($_POST['signin'])){
     if($row){
         if($row['userrole'] == '1'){
             $_SESSION['user'] = $user;
-            header('Location: http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php'); 
+            header('Location: http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php'); 
             exit();
         } elseif($row['userrole'] == '2'){
             $_SESSION['user'] = $user;
-            header('Location: http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php'); 
+            header('Location: http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php'); 
             exit();
         } else {
             echo "Invalid user role"; 
@@ -31,7 +31,7 @@ if(isset($_POST['signin'])){
         }
     } else {
         echo "Login failed";
-        header('Location: http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/signin.php'); // Corrected the location URL and capitalized 'Location'
+        header('Location: http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/signin.php'); // Corrected the location URL and capitalized 'Location'
         exit(); 
     }
 }

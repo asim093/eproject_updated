@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
     // Delay the redirection using JavaScript
     echo "<script>setTimeout(function() {
-        window.location.href = 'http://localhost:80/eproject/website/index.php';
+        window.location.href = 'http://localhost/eproject/website/index.php';
     }, 1000);</script>";
     exit();
 }

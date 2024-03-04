@@ -15,7 +15,7 @@ if(isset($_POST["submit"])) {
     
     $sql = "UPDATE registered_users SET username='$newUsername', email='$newEmail' WHERE id='$id'";
     if(mysqli_query($conn, $sql)) {
-        echo "<script>alert('Edit Done'); window.location.href='http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/table.php';</script>";
+        echo "<script>alert('Edit Done'); window.location.href='http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/table.php';</script>";
     } else {
         echo "Error updating record: " . mysqli_error($conn);
     }
