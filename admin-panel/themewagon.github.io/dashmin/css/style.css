@@ -327,7 +327,7 @@ body{
 }
 .sign_in_main input{
     color: var(--dark) !important;
-    border: 1px solid var(--secondary);
+    border: 1px solid var(--secondary) !important;
 }
 .sign_in_main label{
     color: var(--primary);
