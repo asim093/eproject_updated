@@ -11,7 +11,9 @@ body{
     background-color: var(--dark) !important;
 }
 
-
+.back_dark{
+    background-color: var(--dark) !important; 
+}
 
 .back-to-top {
     position: fixed;

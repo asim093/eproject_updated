@@ -40,8 +40,8 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container-xxl position-relative bg-white d-flex p-0">
+<body class="back_dark">
+    <div class="container-xxl position-relative back_dark d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -54,18 +54,16 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index-2.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SRS Admin</h3>
-
+               
                 <a href="index-2.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SRS Admin</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
-                    <div class="ms-3">
+                    <div class="ms-3 admin_content">
                         <h6 class="mb-0">Jhon Doe</h6>
                         <span>Admin</span>
                     </div>
@@ -104,7 +102,7 @@
 
 
         <!-- Content Start -->
-        <div class="content">
+        <div class="content back_dark">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                 <a href="index-2.php" class="navbar-brand d-flex d-lg-none me-4">
@@ -113,9 +111,7 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
+               
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -200,7 +196,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <div class="bg-light charts rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Today Sale</p>
@@ -209,7 +205,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <div class="bg-light charts rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total Sale</p>
@@ -218,7 +214,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <div class="bg-light charts rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Today Revenue</p>
@@ -227,7 +223,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <div class="bg-light charts rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total Revenue</p>
@@ -244,7 +240,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
+                        <div class="bg-light charts text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">Worldwide Sales</h6>
                                 <a href="#">Show All</a>
@@ -253,7 +249,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
+                        <div class="bg-light charts text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">Salse & Revenue</h6>
                                 <a href="#">Show All</a>
@@ -268,7 +264,7 @@
 
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
+                <div class="bg-light charts text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Recent Salse</h6>
                         <a href="#">Show All</a>
@@ -344,7 +340,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
+                        <div class="h-100 charts bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h6 class="mb-0">Messages</h6>
                                 <a href="#">Show All</a>
@@ -392,7 +388,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
+                        <div class="h-100 charts bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">Calender</h6>
                                 <a href="#">Show All</a>
@@ -401,7 +397,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
+                        <div class="h-100 charts bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
                                 <a href="#">Show All</a>

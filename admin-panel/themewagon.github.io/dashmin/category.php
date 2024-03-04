@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 
-<body>
+<body class="back_dark">
 <?php include "navbar.php" ?>
 
     <div class="container">
