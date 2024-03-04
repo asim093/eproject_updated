@@ -59,7 +59,7 @@ if(isset($_SESSION['user'])){
                     <div class="sign_in_main rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="sign_in d-flex align-items-center justify-content-between mb-3">
                             <a href="index-2.html" class="">
-                                <h3 class="text-primary"><i class=" me-2"></i>SRS  </h3>
+                                <h3 class="sign_company"><i class="me-2"></i>SRS</h3>
                             </a>
                             <h3>Sign In</h3>
                         </div>
