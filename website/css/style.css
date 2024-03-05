@@ -385,6 +385,11 @@ height: 100vh;
     width: 100% !important;
     border-radius: 50%;
 }
+.charts{
+    box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
+    -webkit-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
+    -moz-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;   
+}
 
 div.popup-container{
     position: fixed;
@@ -392,7 +397,7 @@ div.popup-container{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--dark);
     backdrop-filter: blur(5px);
     display: flex;
     flex-direction: row;
@@ -415,7 +420,7 @@ div.popup-container{
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
-    color: #30475e;
+    color: var(--primary) !important;
   }
   
   div.popup-container div.popup h2 button{
@@ -424,7 +429,7 @@ div.popup-container{
     outline: none;
     font-size: 18px;
     font-weight: 550;
-    color: #797775;
+    color: var(--secondary) !important;
   }
   
   div.popup-container div.popup input{
@@ -432,7 +437,7 @@ div.popup-container{
     margin-bottom: 20px;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #30475e;
+    border-bottom: 2px solid var(--secondary) !important;
     border-radius: 0;
     padding: 5px 0;
     font-weight: 550;
@@ -443,7 +448,7 @@ div.popup-container{
     font-weight: 550;
     font-style: 15px;
     color: white;
-    background-color: #30475e;
+    background-color: var(--primary) !important;
     padding: 4px 10px;
     border: none;
     outline: none;
@@ -455,26 +460,26 @@ div.popup-container{
   }
   
   div.popup-container div.register h2{
-    color: #fa9579;
+    color: var(--primary) !important;
   }
   
   div.popup-container div.register input{
-    border-bottom-color: #fa9579;
+    border-bottom-color: var(--secondary) !important;
   }
   
   div.popup-container div.register button.register-btn{
-    background-color: #fa9579;
+    background-color: var(--secondary) !important;
   }
   
   div.user{
-    color: #30475e;
+    color: var(--primary) !important;
     background-color: #75cfb8;
     padding: 5px 15px;
     border-radius: 5px;
     font-weight: 500;
   }
   div.user a{
-    color: #30475e;
+    color: var(--primary) !important;
   }
 
   
