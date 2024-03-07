@@ -70,9 +70,9 @@
                     <a href="index-2.php" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
              
-                    <a href="table.php" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Tables</a>
+                    <a href="table.php" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Tables</a>
                     <a href="category.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add Category</a>
-                    <a href="addproduct.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add product</a>
+                    <a href="addproduct.php" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Add product</a>
                     <a href="tester.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add Tester</a>
                     <a href="appointments.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Appointments</a>
                     <!-- <div class="nav-item dropdown">
