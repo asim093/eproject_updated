@@ -36,7 +36,7 @@
     <link href="css/style.css" rel="stylesheet">
 
 <body>
-    <div class="content">
+    <div class="content back_dark">
         <!-- Navbar Start -->
         <form action="#" method="POST">
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">

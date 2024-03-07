@@ -40,22 +40,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
     <title>Document</title>
     <style>
-        .form-group {
-            margin: 1rem 0rem !important;
-        }
+        /* add product page */
+.form-group {
+    margin: 1rem 0rem !important;
+}
 
-        .container {
-            margin-top: 5rem !important;
-        }
+.container {
+    margin-top: 5rem !important;
+}
 
-        .form-container {
-            border: 1px solid gray;
-            padding: 2rem;
-            border-radius: 10px;
-        }
+.form-container {
+    border: 1px solid var(--primary);
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: var(--light) !important;
+}
+
+.add_product h2{
+    color: var(--primary) !important;
+}
+.add_product input{
+    border : 1px solid var(--secondary);
+}
+.add_product label{
+    color : var(--secondary);
+}
+.add_product .form-select{
+    border : 1px solid var(--secondary);
+}
+.add_product .table_btn_del{
+    background-color: var(--secondary);
+    padding: 3px 10px;
+    transition: .3s ease-in-out;
+    color : var(--light);
+}
+.add_product .table_btn_del:hover{
+    background-color: var(--primary);
+    padding: 3px 10px;
+    transition: .3s ease-in-out;
+    color : var(--light);
+}
+/* add product page */
     </style>
 </head>
 
@@ -65,17 +93,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-8 col-lg-6 mx-auto my-5">
-                <div class="form-container">
+                <div class="form-container charts add_product">
                     <h2>Add Product </h2>
                     <form action="#" method="POST">
                         <div class="form-group">
-                            <label for="productName">product Name</label>
+                            <label for="productName">Product Name</label>
                             <input type="text" id="productName" name="productName" class="form-control" required>
 
                         </div>
 
                         <div class="form-group">
-                            <label for="product_id">product id</label>
+                            <label for="product_id">Product id</label>
                             <input type="text" id="product_id" name="productid" class="form-control" required>
                         </div>
 
@@ -91,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="floatingSelect">Category</label>
                         </div>
 
-                        <button type="submit" name="submit" class="btn btn-primary">Add Category</button>
+                        <button type="submit" name="submit" class="btn table_btn_del">Add Category</button>
                     </form>
                 </div>
             </div>
