@@ -168,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="floatingSelect">Category</label>
                         </div>
 
-                        <button type="submit" name="submit" class="btn table_btn_del">Add Category</button>
+                        <button type="submit" name="submit" class="btn btn-md table_btn_del">Add Category</button>
                     </form>
                 </div>
             </div>

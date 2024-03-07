@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                        
                        
-                        <button type="submit" class="btn table_btn_del">Add Category</button>
+                        <button type="submit" class="btn btn-md table_btn_del">Add Category</button>
                     </form>
                 </div>
             </div>

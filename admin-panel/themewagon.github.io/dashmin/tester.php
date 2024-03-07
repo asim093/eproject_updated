@@ -153,7 +153,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                                 <label for="floatingSelect">Tester Specialities</label>
                             </div>
 
-                        <button type="submit" name="submit" class="btn table_btn_del">Add Tester</button>
+                        <button type="submit" name="submit" class="btn btn-md table_btn_del">Add Tester</button>
                     </form>
                 </div>
             </div>
