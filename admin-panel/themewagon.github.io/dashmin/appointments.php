@@ -142,7 +142,7 @@ if ($result->num_rows > 0) {
 
 
         <!-- Content Start -->
-        <div class="content">
+        <div class="content back_dark">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                 <a href="index-2.php" class="navbar-brand d-flex d-lg-none me-4">
