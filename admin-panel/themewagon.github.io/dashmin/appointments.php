@@ -278,7 +278,7 @@ if ($result->num_rows > 0) {
                                         echo "<td>
                                         <a href='table-tester.php?id=" . $row["id"] . "'>Assign Tester</a>
                                         <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>
-                </td>";
+                                         </td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -293,8 +293,6 @@ if ($result->num_rows > 0) {
         </div>
     </div>
    
-    </div>
-    </div>
     <!-- Table End -->
 
 
