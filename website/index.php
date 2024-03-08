@@ -211,7 +211,7 @@ session_start();
   </div>
 
   <div class="popup-container" id="register-popup">
-    <div class="register popup">
+    <div class="register popup charts">
       <form method="POST" action="login_register.php">
         <h2>
           <span>USER REGISTER</span>

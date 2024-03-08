@@ -242,6 +242,9 @@ if ($result->num_rows > 0) {
                                         <th scope="col">Created At</th>
                                         <th scope="col">Service Category</th>
                                         <th scope="col">Tester Name</th>
+                                        <th scope="col">Assign Tester</th>
+                                        <th scope="col">Delete</th>
+
                                         <!-- <th scope="col">Actions</th> -->
                                     </tr>
                                 </thead>
@@ -262,9 +265,8 @@ if ($result->num_rows > 0) {
                                         echo "<td>" . $row["created_at"] . "</td>";
                                         echo "<td>" . $row["service_category"] . "</td>";
                                         echo "<td>" . $row["tester_name"] . "</td>";
-                                        echo "<td>
-                                        <a href='table-tester.php?id=" . $row["id"] . "'>Assign Tester</a>
-                                        <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>
+                                        echo "<td> <a href='table-tester.php?id=" . $row["id"] . "'>Assign Tester</a> </td>";
+                                       echo "<td> <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>
                                          </td>";
                                         echo "</tr>";
                                     }
