@@ -2,6 +2,12 @@
 
 <?php
  include 'authentication.php';
+ if(isset($_SESSION['userrole ==  "2" '])){
+    echo "<script>window.location.href = 'http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/tester-dashboard.php';</script>";
+
+    exit;
+}
+
 
 ?>
 
