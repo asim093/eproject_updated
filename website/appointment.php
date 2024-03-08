@@ -121,7 +121,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="./css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -358,7 +358,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
         ?>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <div class="card-body">
+                        <div class="card-body charts">
                             <h5 class="card-title">Appointment ID: <?php echo $row['id']; ?></h5>
                             <p class="card-text">Service Category: <?php echo $row['service_category']; ?></p>
                             <p class="card-text">Product Name: <?php echo $row['product_name']; ?></p>
@@ -368,7 +368,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
                             <!-- View and Edit buttons -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                                 <a href="view_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary me-md-2">View</a>
-                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-success">Edit</a>
+                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Edit</a>
                             </div>
                         </div>
                     </div>

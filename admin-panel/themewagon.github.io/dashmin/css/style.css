@@ -368,12 +368,14 @@ body{
 }
 .user_table .table_btn_del{
     background-color: var(--secondary);
+    color: var(--light) !important;
     padding: 3px 10px;
     transition: .3s ease-in-out;
 }
 .user_table .table_btn_edit{
     background-color: var(--primary);
     padding: 3px 10px;
+    color: var(--light) !important;
 }
 .user_table .table_btn_edit a{
     color: var(--light);

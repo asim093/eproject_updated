@@ -73,6 +73,7 @@ if ($result->num_rows > 0) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -249,29 +250,27 @@ if ($result->num_rows > 0) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    // Assuming you have fetched the data from the database and stored it in an array called $data
-                                    // Replace this with your actual data fetching logic
-                                    
+    <?php
+    // Assuming you have fetched the data from the database and stored it in an array called $data
+    // Replace this with your actual data fetching logic
 
+    // Iterate over the data and populate the table rows
+    foreach ($data as $row) {
+        echo "<tr>";
+        echo "<th scope='row'>" . $row["id"] . "</th>";
+        echo "<td>" . $row["user_name"] . "</td>";
+        echo "<td>" . $row["user_email"] . "</td>";
+        echo "<td>" . $row["product_name"] . "</td>";
+        echo "<td>" . $row["created_at"] . "</td>";
+        echo "<td>" . $row["service_category"] . "</td>";
+        echo "<td>" . $row["tester_name"] . "</td>";
+        echo "<td> <a href='table-tester.php?id=" . $row["id"] . "' class='btn table_btn_edit text-light'>Assign Tester</a> </td>";
+        echo "<td> <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");' class='btn table_btn_del text-light'>Delete</a> </td>";
+        echo "</tr>";
+    }
+    ?>
+</tbody>
 
-                                    // Iterate over the data and populate the table rows
-                                    foreach ($data as $row) {
-                                        echo "<tr>";
-                                        echo "<th scope='row'>" . $row["id"] . "</th>";
-                                        echo "<td>" . $row["user_name"] . "</td>";
-                                        echo "<td>" . $row["user_email"] . "</td>";
-                                        echo "<td>" . $row["product_name"] . "</td>";
-                                        echo "<td>" . $row["created_at"] . "</td>";
-                                        echo "<td>" . $row["service_category"] . "</td>";
-                                        echo "<td>" . $row["tester_name"] . "</td>";
-                                        echo "<td> <a href='table-tester.php?id=" . $row["id"] . "'>Assign Tester</a> </td>";
-                                       echo "<td> <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Delete</a>
-                                         </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>

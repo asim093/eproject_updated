@@ -7,10 +7,11 @@
     <title>Edit Appointment</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: var(--dark);
             padding: 20px;
         }
 
@@ -22,7 +23,7 @@
         }
 
         h1 {
-            color: #343a40;
+            color: var(--primary);
             margin-bottom: 30px;
             text-align: center;
         }
@@ -30,15 +31,33 @@
         .form-group {
             margin-bottom: 20px;
         }
-
+        label{
+            color: var(--primary);
+        }
+        input{
+            border: 1px solid var(--secondary) !important;
+            color: var(--secondary) !important;
+        }
         .btn-save {
             margin-top: 20px;
+            background-color: var(--secondary);
+            transition: 0.3s ease-in-out;
         }
+        .btn-save:hover {
+            margin-top: 20px;
+            background-color: var(--primary);
+            transition: 0.3s ease-in-out;
+        }
+        .charts{
+    box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
+    -webkit-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
+    -moz-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;   
+}
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container charts">
         <h1>Edit Appointment</h1>
         <?php
         include "config.php";
