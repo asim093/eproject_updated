@@ -38,11 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Submit Test Result</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: var(--dark);
             margin: 0;
             padding: 0;
             display: flex;
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .container {
-            background-color: #ffffff;
+            background-color: var(--light);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 30px;
@@ -63,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         h2 {
             margin-top: 0;
             text-align: center;
-            color: #333;
+            color: var(--primary);
         }
 
         label {
             font-weight: bold;
-            color: #555;
+            color: var(--primary);
         }
 
         input[type="text"],
@@ -78,14 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px;
             margin-top: 5px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--secondary);
             border-radius: 4px;
             box-sizing: border-box;
             resize: vertical;
+            outline: none;
+            color: var(--secondary);
         }
 
         button[type="submit"] {
-            background-color: #007bff;
+            background-color: var(--primary);
             color: #ffffff;
             border: none;
             border-radius: 4px;
@@ -97,12 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         button[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: var(--secondary);
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container charts">
         <?php if(isset($_SESSION['id'])): ?>
         <h2>Product ID: <?php echo $_POST['row']; ?></h2>
         <?php endif; ?>

@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>SRS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -94,7 +94,7 @@ if ($result->num_rows > 0) {
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index-2.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SRS Tester</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -105,12 +105,14 @@ if ($result->num_rows > 0) {
                     </div>
                     <div class="admin_content ms-3">
                         <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <span>Tester</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="tester-dashboard.php" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                            <a href="testingshow.php" class="nav-item nav-link active"><i
+                            class="fa fa-table me-2"></i>Show Product</a>
                     <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>Elements</a>
@@ -145,7 +147,7 @@ if ($result->num_rows > 0) {
 
 
         <!-- Content Start -->
-        <div class="content">
+        <div class="content back_dark">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                 <a href="index-2.php" class="navbar-brand d-flex d-lg-none me-4">
@@ -154,9 +156,7 @@ if ($result->num_rows > 0) {
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
+               
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -287,10 +287,10 @@ if ($result->num_rows > 0) {
                                             <!-- Combine buttons into one column -->
                                             <td>
                                                 <a href='result.php?id=<?= $row["id"] ?>'
-                                                    class='btn btn-primary btn-sm'>Result</a>
+                                                    class='btn table_btn_edit btn-sm'>Result</a>
                                                 <a href='?delete_id=<?= $row["id"] ?>'
                                                     onclick='return confirm("Are you sure you want to delete this item?");'
-                                                    class='btn btn-danger btn-sm'>Delete</a>
+                                                    class='btn table_btn_del btn-sm'>Delete</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -307,230 +307,7 @@ if ($result->num_rows > 0) {
 
         </div>
     </div>
-    <!-- <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Accented Table</h6>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>jhon@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mark@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacob@email.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Hoverable Table</h6>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>jhon@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mark@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacob@email.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Color Table</h6>
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>jhon@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mark@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacob@email.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Bordered Table</h6>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>jhon@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mark@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacob@email.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Table Without Border</h6>
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>jhon@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>mark@email.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacob@email.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Responsive Table</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Last Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Country</th>
-                                            <th scope="col">ZIP</th>
-                                            <th scope="col">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>mark@email.com</td>
-                                            <td>UK</td>
-                                            <td>456</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>jacob@email.com</td>
-                                            <td>AU</td>
-                                            <td>789</td>
-                                            <td>Member</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>-->
+   
     </div>
     </div>
     <!-- Table End -->
