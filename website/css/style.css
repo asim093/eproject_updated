@@ -448,7 +448,7 @@ div.popup-container{
     font-weight: 550;
     font-style: 15px;
     color: white;
-    background-color: var(--primary) !important;
+    background-color: var(--secondary) !important;
     padding: 4px 10px;
     border: none;
     outline: none;
@@ -482,4 +482,8 @@ div.popup-container{
     color: var(--primary) !important;
   }
 
-  
+  /* recent appointment */
+ .card-body .card-title{
+    color: var(--primary) !important;
+  }
+  /* recent appointment */
