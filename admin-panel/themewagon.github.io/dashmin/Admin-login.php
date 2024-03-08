@@ -23,7 +23,7 @@ if(isset($_POST['signin'])){
             exit();
         } elseif($row['userrole'] == '2'){
             $_SESSION['user'] = $user;
-            header('Location: http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php'); 
+            header('Location: http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/tester-dashboard.php'); 
             exit();
         } else {
             header('Location: http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/signin.php');
