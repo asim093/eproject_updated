@@ -1,52 +1,72 @@
 <?php
 session_start();
 include "config.php";
-include "appointment_check.php";
+// include "appointment_check.php"; 
 
-// Check if the form is submitted
+ini_set('display_errors', 1); // Enable error display
+error_reporting(E_ALL); // Report all PHP errors
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Check if all fields are filled
-  if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
-      echo "<script>alert('Please fill in all fields')</script>";
-  } else {
-      // Sanitize input data
-      $service_category = mysqli_real_escape_string($conn, $_POST['service_category']);
-      $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
-      $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
-      $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
-      $appointment_date = mysqli_real_escape_string($conn, $_POST['appointment_date']);
-      $appointment_time = mysqli_real_escape_string($conn, $_POST['appointment_time']);
+    // Check if all fields are filled
+    if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
+        echo "<script>alert('Please fill in all fields')</script>";
+    } else {
+        // Check if the user has already booked the maximum number of appointments
+        $max_appointments = 6;
+        $user_email = $_SESSION['email'] ?? '';
+        if (!empty($user_email)) {
+            $count_query = "SELECT COUNT(*) AS appointment_count FROM appointment WHERE user_email = ?";
+            if ($stmt = $conn->prepare($count_query)) {
+                $stmt->bind_param("s", $user_email);
+                $stmt->execute();
+                $count_result = $stmt->get_result();
+                $count_row = $count_result->fetch_assoc();
+                $appointment_count = $count_row['appointment_count'] ?? 0;
+                $stmt->close();
 
-      // Insert the appointment into the database
-      $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES ('$service_category', '$product_name', '$user_name', '$user_email', '$appointment_date', '$appointment_time')";
+                if ($appointment_count >= $max_appointments) {
+                    echo "<script>alert('You have already booked the maximum number of appointments.')</script>";
+                } else {
+                    // Proceed with inserting the appointment into the database
+                    $service_category = $_POST['service_category'];
+                    $product_name = $_POST['product_name'];
+                    $user_name = $_POST['user_name'];
+                    $user_email = $_POST['user_email'];
+                    $appointment_date = $_POST['appointment_date'];
+                    $appointment_time = $_POST['appointment_time'];
 
-      if (mysqli_query($conn, $insert_query)) {
-          // Fetch the auto-generated ID
-          $appointment_id = mysqli_insert_id($conn);
-          // Format the ID to have leading zeros to make it a 10-character code
-          $appointment_code = str_pad($appointment_id, 10, '0', STR_PAD_LEFT);
-          // Update the appointment with the zero-padded ID
-          mysqli_query($conn, "UPDATE appointment SET id='$appointment_code' WHERE id='$appointment_id'");
-          echo "<script>alert('Your appointment has been booked successfully. Your appointment code is: $appointment_code')</script>";
-      } else {
-          echo "<script>alert('Error: " . mysqli_error($conn) . "')</script>";
-      }
-  }
+                    $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES (?, ?, ?, ?, ?, ?)";
+                    if ($stmt = $conn->prepare($insert_query)) {
+                        $stmt->bind_param("ssssss", $service_category, $product_name, $user_name, $user_email, $appointment_date, $appointment_time);
+                        if ($stmt->execute()) {
+                            $appointment_id = $stmt->insert_id;
+                            $appointment_code = str_pad($appointment_id, 10, '0', STR_PAD_LEFT);
+                            mysqli_query($conn, "UPDATE appointment SET id='$appointment_code' WHERE id='$appointment_id'");
+                            echo "<script>alert('Your appointment has been booked successfully. Your appointment code is: $appointment_code')</script>";
+                        } else {
+                            echo "<script>alert('Error: Unable to book appointment.')</script>";
+                        }
+                        $stmt->close();
+                    } else {
+                        echo "<script>alert('Error: Unable to prepare statement for appointment insertion.')</script>";
+                    }
+                }
+            } else {
+                echo "<script>alert('Error: Unable to prepare statement for appointment count.')</script>";
+            }
+        } else {
+            echo "<script>alert('Error: Unable to retrieve user email.')</script>";
+        }
+    }
 }
 
-
-  
-
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-
-  echo "<script>alert('Please log in first')</script>";
-
-
-  echo "<script>setTimeout(function() {
-        window.location.href = 'http://localhost/eproject/website/index.php';
+    echo "<script>alert('Please log in first')</script>";
+    echo "<script>setTimeout(function() {
+        window.location.href = 'http://localhost:80/eproject/website/index.php';
     }, 1000);</script>";
-  exit();
+    exit();
 }
 
 // Retrieve categories from the database
@@ -63,14 +83,8 @@ $product_query = "SELECT product_name FROM product";
 $product_result = mysqli_query($conn, $product_query);
 $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
 
-
-
-
-// session_start();
-
-
-
 ?>
+
 
 
 
@@ -132,7 +146,9 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
     <div class="row gx-0">
       <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
         <div class="d-inline-flex align-items-center">
-          <small class="py-2"><i class="far fa-clock text-primary me-2"></i>Opening Hours: Mon - Tues : 6.00 am - 10.00
+          <small class="py-2"><i class="far fa-clock text-primary me-2"></i>Opening Hours: Mon -
+
+ Tues : 6.00 am - 10.00
             pm, Sunday Closed </small>
         </div>
       </div>
@@ -161,19 +177,17 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
     </button>
     <div class="collapse navbar-collapse text-center bg-white nav_item" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
-        <a href="http://localhost/eproject/website/index.php" class="nav-item nav-link active">Home</a>
-        <a href="http://localhost/eproject/website/about.php" class="nav-item nav-link">About</a>
-        <a href="http://localhost/eproject/website/service.php" class="nav-item nav-link">Service</a>
+        <a href="http://localhost:80/eproject/website/index.php" class="nav-item nav-link active">Home</a>
+        <a href="http://localhost:80/eproject/website/about.php" class="nav-item nav-link">About</a>
+        <a href="http://localhost:80/eproject/website/service.php" class="nav-item nav-link">Service</a>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown
-
-">Pages</a>
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
           <div class="dropdown-menu m-0">
-            <a href="http://localhost/eproject/website/team.php" class="dropdown-item">Our Team</a>
-            <a href="http://localhost/eproject/website/appointment.php" class="dropdown-item">Appointment</a>
+            <a href="http://localhost:80/eproject/website/team.php" class="dropdown-item">Our Team</a>
+            <a href="http://localhost:80/eproject/website/appointment.php" class="dropdown-item">Appointment</a>
           </div>
         </div>
-        <a href="http://localhost/eproject/website/contact.php" class="nav-item nav-link">Contact</a>
+        <a href="http://localhost:80/eproject/website/contact.php" class="nav-item nav-link">Contact</a>
       </div>
 
       <div class="nav-item dropdown">
@@ -242,7 +256,9 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
             </h1>
             <p class="text-white mb-0">
               Our team of electricians and technicians holds industry-recognized certifications, ensuring that we adhere
-              to the highest levels of professionalism and expertise in every project we undertake. With extensive
+              to the highest levels of professionalism and expertise in every
+
+ project we undertake. With extensive
               training and ongoing education, we stay at the forefront of advancements in the electrical field, allowing
               us to provide innovative solutions tailored to meet the unique needs of our clients.
             </p>
@@ -325,6 +341,50 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
   <!-- Appointment End -->
   <!-- Appointment End -->
 
+
+  <!-- Recent Appointments Start -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Recent Appointments</h2>
+    <div class="row">
+        <?php
+        // Execute the query to fetch recent appointments
+        $recent_appointments_query = "SELECT * FROM appointment ORDER BY appointment_date DESC LIMIT 5";
+        $recent_appointments_result = mysqli_query($conn, $recent_appointments_query);
+
+        // Check if there are any recent appointments
+        if (mysqli_num_rows($recent_appointments_result) > 0) {
+            // Loop through each recent appointment and display it
+            while ($row = mysqli_fetch_assoc($recent_appointments_result)) {
+        ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Appointment ID: <?php echo $row['id']; ?></h5>
+                            <p class="card-text">Service Category: <?php echo $row['service_category']; ?></p>
+                            <p class="card-text">Product Name: <?php echo $row['product_name']; ?></p>
+                            <p class="card-text">User Name: <?php echo $row['user_name']; ?></p>
+                            <p class="card-text">Appointment Date: <?php echo $row['appointment_date']; ?></p>
+                            <p class="card-text">Appointment Time: <?php echo $row['appointment_time']; ?></p>
+                            <!-- View and Edit buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                <a href="view_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary me-md-2">View</a>
+                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-success">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <?php
+            }
+        } else {
+            echo "<div class='col-12'><p class='text-center'>No recent appointments found.</p></div>";
+        }
+        ?>
+    </div>
+</div>
+<!-- Recent Appointments End -->
+
+
+
   <!-- Newsletter Start -->
   <div class="container-fluid position-relative pt-5 wow fadeInUp" data-wow-delay="0.1s" style="z-index: 1;">
     <div class="container">
@@ -349,54 +409,43 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
           <h3 class="text-white mb-4">Quick Links</h3>
           <div class="d-flex flex-column justify-content-start">
             <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right
+
+ text-primary me-2"></i>About Us</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Services</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Blog</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
-          <h3 class="text-white mb-4">Popular Links</h3>
+          <h3 class="text-white mb-4">Contact Info</h3>
+          <p class="mb-1"><i class="bi bi-geo-alt-fill text-primary me-2"></i>123 Street, New York, USA</p>
+          <p class="mb-1"><i class="bi bi-envelope-fill text-primary me-2"></i>info@example.com</p>
+          <p class="mb-1"><i class="bi bi-telephone-fill text-primary me-2"></i>+012 345 6789</p>
+          <p class="mb-1"><i class="bi bi-clock-fill text-primary me-2"></i>Mon - Fri: 9:00 AM - 6:00 PM</p>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h3 class="text-white mb-4">Our Services</h3>
           <div class="d-flex flex-column justify-content-start">
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Electrical Repair</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Lighting
+              Installation</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Wiring and Rewiring</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Electrical Panel
+              Upgrades</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Commercial Electrical
+              Services</a>
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
-          <h3 class="text-white mb-4">Get In Touch</h3>
-          <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>123 Street, New York, USA</p>
-          <p class="mb-2"><i class="bi bi-envelope-open text-primary me-2"></i>info@example.com</p>
-          <p class="mb-0"><i class="bi bi-telephone text-primary me-2"></i>+012 345 67890</p>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <h3 class="text-white mb-4">Follow Us</h3>
-          <div class="d-flex">
-            <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i
-                class="fab fa-twitter fw-normal"></i></a>
-            <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i
-                class="fab fa-facebook-f fw-normal"></i></a>
-            <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i
-                class="fab fa-linkedin-in fw-normal"></i></a>
-            <a class="btn btn-lg btn-primary btn-lg-square rounded" href="#"><i
-                class="fab fa-instagram fw-normal"></i></a>
+          <h3 class="text-white mb-4">Connect With Us</h3>
+          <div class="d-flex flex-column justify-content-start">
+            <a class="text-light mb-2" href="#"><i class="bi bi-facebook text-primary me-2"></i>Facebook</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-twitter text-primary me-2"></i>Twitter</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-instagram text-primary me-2"></i>Instagram</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-linkedin text-primary me-2"></i>Linkedin</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-youtube text-primary me-2"></i>Youtube</a>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid text-light py-4" style="background: #051225;">
-    <div class="container">
-      <div class="row g-0">
-        <div class="col-md-6 text-center text-md-start">
-          <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights
-            Reserved.</p>
-        </div>
-        <div class="col-md-6 text-center text-md-end">
-          <p class="mb-0">Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-          </p>
         </div>
       </div>
     </div>
@@ -404,29 +453,35 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
   <!-- Footer End -->
 
 
-  <!-- Back to Top -->
-  <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- Bottom Start -->
+  <div class="container-fluid bg-primary py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <p class="mb-0 text-light">&copy; 2023 Your Company. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom End -->
 
+  <!-- Go to Top Start -->
+  <a href="#" class="btn btn-primary btn-lg back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- Go to Top End -->
 
   <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/waypoints/waypoints.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/tempusdominus/js/moment.min.js"></script>
-  <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-  <script src="lib/twentytwenty/jquery.event.move.js"></script>
-  <script src="lib/twentytwenty/jquery.twentytwenty.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/owl.carousel/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/en-au.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
+  
 </body>
 
 </html>
