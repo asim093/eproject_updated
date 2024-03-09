@@ -31,28 +31,33 @@
         .form-group {
             margin-bottom: 20px;
         }
-        label{
+
+        label {
             color: var(--primary);
         }
-        input{
+
+        input {
             border: 1px solid var(--secondary) !important;
             color: var(--secondary) !important;
         }
+
         .btn-save {
             margin-top: 20px;
             background-color: var(--secondary);
             transition: 0.3s ease-in-out;
         }
+
         .btn-save:hover {
             margin-top: 20px;
             background-color: var(--primary);
             transition: 0.3s ease-in-out;
         }
-        .charts{
-    box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
-    -webkit-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;
-    -moz-box-shadow: 0px 1px 18px 0px rgba(62,25,129,0.82) inset;   
-}
+
+        .charts {
+            box-shadow: 0px 1px 18px 0px rgba(62, 25, 129, 0.82) inset;
+            -webkit-box-shadow: 0px 1px 18px 0px rgba(62, 25, 129, 0.82) inset;
+            -moz-box-shadow: 0px 1px 18px 0px rgba(62, 25, 129, 0.82) inset;
+        }
     </style>
 </head>
 
@@ -71,33 +76,37 @@
             if (mysqli_num_rows($appointment_result) == 1) {
                 $appointment = mysqli_fetch_assoc($appointment_result);
         ?>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Service Category</th>
+                            <td><?php echo $appointment['service_category']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Product Name</th>
+                            <td><?php echo $appointment['product_name']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>User Name</th>
+                            <td><?php echo $appointment['user_name']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>User Email</th>
+                            <td><?php echo $appointment['user_email']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Appointment Date</th>
+                            <td><?php echo $appointment['appointment_date']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Appointment Time</th>
+                            <td><?php echo $appointment['appointment_time']; ?></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <form action="update_appointment.php" method="post">
-                    <div class="form-group">
-                        <label for="service_category">Service Category</label>
-                        <input type="text" class="form-control" id="service_category" name="service_category" value="<?php echo $appointment['service_category']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="product_name">Product Name</label>
-                        <input type="text" class="form-control" id="product_name" name="product_name" value="<?php echo $appointment['product_name']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="user_name">User Name</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name" value="<?php echo $appointment['user_name']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="user_email">User Email</label>
-                        <input type="email" class="form-control" id="user_email" name="user_email" value="<?php echo $appointment['user_email']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="appointment_date">Appointment Date</label>
-                        <input type="date" class="form-control" id="appointment_date" name="appointment_date" value="<?php echo $appointment['appointment_date']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="appointment_time">Appointment Time</label>
-                        <input type="time" class="form-control" id="appointment_time" name="appointment_time" value="<?php echo $appointment['appointment_time']; ?>" required>
-                    </div>
                     <input type="hidden" name="id" value="<?php echo $appointment_id; ?>">
-                    <button type="submit" class="btn btn-primary btn-save">Save Changes</button>
+                    <button onclick="window.print();" type="submit" class="btn btn-primary btn-save">Save Changes</button>
                 </form>
         <?php
             } else {

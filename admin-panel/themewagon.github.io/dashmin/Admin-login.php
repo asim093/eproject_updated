@@ -18,15 +18,16 @@ if(isset($_POST['signin'])){
 
     if($row){
         if($row['userrole'] == '1'){
-            $_SESSION['user'] = $user;
+            $_SESSION['user'] = $row['userrole'];
+            // echo $_SESSION['user'] ;
             echo "<script>window.location.href = 'http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/index-2.php';</script>";
-            exit();
+            // exit();
         } elseif($row['userrole'] == '2'){
-            $_SESSION['user'] = $user;
+            $_SESSION['user'] = $row['userrole'];
             echo "<script>window.location.href = 'http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/tester-dashboard.php';</script>";
             exit();
         } else {
-            echo "<script>window.location.href = 'http://localhost:80/eproject/admin-panel/themewagon.github.io/dashmin/signin.php';</script>";
+            echo "<script>window.location.href = 'http://localhost/eproject/admin-panel/themewagon.github.io/dashmin/signin.php';</script>";
             exit();
         }
     } else {

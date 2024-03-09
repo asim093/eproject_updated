@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Failed to submit test result.');</script>";
     }
 };
+// Retrieve the ID from the URL
+if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+    
+} else {
+    // Redirect if the ID is not provided
+    header("Location: testingshow.php");
+    exit();
+}
 
 ?>
 
@@ -110,18 +119,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Product ID: <?php echo $_POST['row']; ?></h2>
         <?php endif; ?>
         <h2>Submit Test Result</h2>
+       
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
+       
             <div>
                 <label for="product_id">Product ID:</label>
-                <input type="text" name="product_id" id="product_id" required>
+                <input type="text" name="product_id" id="product_id"  value="<?= $id ?>" required>
             </div>
-            <div>
+            <!-- <div>
                 <label for="tester_name">Tester Name:</label>
                 <input type="text" name="tester_name" id="tester_name" required>
-            </div>
+            </div> -->
             <div>
                 <label for="test_date">Test Date:</label>
-                <input type="date" name="test_date" id="test_date" required>
+                <input type="date" name="test_date" id="test_date" value="<?= $date ?>" required>
             </div>
             <div>
                 <label for="test_result">Test Result:</label>
@@ -136,7 +148,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <textarea name="suggestions" id="suggestions" rows="4"></textarea>
             </div>
             <button type="submit">Submit</button>
+           
         </form>
+
+ 
     </div>
 </body>
 </html>
