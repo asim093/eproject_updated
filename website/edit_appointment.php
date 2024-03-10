@@ -1,10 +1,15 @@
+<?php
+// Start session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Appointment</title>
+    <title>Result of Appointment</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
@@ -62,60 +67,35 @@
 </head>
 
 <body>
-    <div class="container charts">
-        <h1>Edit Appointment</h1>
-        <?php
-        include "config.php";
-
-        if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
-            $appointment_id = mysqli_real_escape_string($conn, $_GET['id']);
-
-            $appointment_query = "SELECT * FROM appointment WHERE id = '$appointment_id'";
-            $appointment_result = mysqli_query($conn, $appointment_query);
-
-            if (mysqli_num_rows($appointment_result) == 1) {
-                $appointment = mysqli_fetch_assoc($appointment_result);
-        ?>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>Service Category</th>
-                            <td><?php echo $appointment['service_category']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Product Name</th>
-                            <td><?php echo $appointment['product_name']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>User Name</th>
-                            <td><?php echo $appointment['user_name']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>User Email</th>
-                            <td><?php echo $appointment['user_email']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Appointment Date</th>
-                            <td><?php echo $appointment['appointment_date']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Appointment Time</th>
-                            <td><?php echo $appointment['appointment_time']; ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <form action="update_appointment.php" method="post">
-                    <input type="hidden" name="id" value="<?php echo $appointment_id; ?>">
-                    <button onclick="window.print();" type="submit" class="btn btn-primary btn-save">Save Changes</button>
-                </form>
-        <?php
-            } else {
-                echo "<p>Appointment not found.</p>";
-            }
-        } else {
-            echo "<p>No appointment ID specified.</p>";
-        }
-        ?>
+<div class="container charts">
+        <h1>Result</h1>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Product Id</th>
+                    <td><?php echo isset($_SESSION['product_id']) ? $_SESSION['product_id'] : ''; ?></td>
+                </tr>
+                <tr>
+                    <th>Test Date</th>
+                    <td><?php echo isset($_SESSION['test_date']) ? $_SESSION['test_date'] : ''; ?></td>
+                </tr>
+                <tr>
+                    <th>Test Result</th>
+                    <td><?php echo isset($_SESSION['test_result']) ? $_SESSION['test_result'] : ''; ?></td>
+                </tr>
+                <tr>
+                    <th>Defects Found</th>
+                    <td><?php echo isset($_SESSION['defects_found']) ? $_SESSION['defects_found'] : ''; ?></td>
+                </tr>
+                <tr>
+                    <th>Suggestions</th>
+                    <td><?php echo isset($_SESSION['suggestions']) ? $_SESSION['suggestions'] : ''; ?></td>
+                </tr>
+            </tbody>
+        </table>        
+        <form action="" method="Get">
+            <button onclick="window.print();" type="submit" class="btn btn-primary btn-save">Save Changes</button>
+        </form>
     </div>
 </body>
 
