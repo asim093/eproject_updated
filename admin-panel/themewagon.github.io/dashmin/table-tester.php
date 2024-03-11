@@ -1,24 +1,18 @@
 <?php
 include "config.php";
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the selected tester's name from the form
     $tester_name = $_POST['tester_name'];
     
-    // Get the appointment ID from the URL
     $appointment_id = $_GET['id'];
     
-    // Update the appointment with the selected tester's name
     $insert_query = "UPDATE appointment SET tester_name = ? WHERE id = ?";
     
-    // Prepare the insert statement
     $stmt = $conn->prepare($insert_query);
     $stmt->bind_param("si", $tester_name, $appointment_id);
     
     // Execute the insert statement
     if ($stmt->execute()) {
-        // Redirect back to the table page
         header("Location: appointments.php");
         exit();
     } else {
@@ -26,8 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch the list of available testers from the database
-$testers_query = "SELECT * FROM tester"; // Make sure 'tester' is the correct table name
+$testers_query = "SELECT * FROM tester"; 
 $testers_result = $conn->query($testers_query);
 $testers = [];
 if ($testers_result->num_rows > 0) {

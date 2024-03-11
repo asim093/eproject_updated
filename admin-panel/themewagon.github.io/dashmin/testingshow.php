@@ -15,7 +15,6 @@ if (isset($_GET['delete_id'])) {
 
     // Execute the delete statement
     if ($stmt->execute()) {
-        // Redirect to the same page after deletion
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } else {
@@ -44,7 +43,6 @@ if ($result->num_rows > 0) {
 <html lang="en">
 
 
-<!-- Mirrored from themewagon.github.io/dashmin/table.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
 <!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 

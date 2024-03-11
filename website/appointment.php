@@ -8,65 +8,65 @@ error_reporting(E_ALL); // Report all PHP errors
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if all fields are filled
-    if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
-        echo "<script>alert('Please fill in all fields')</script>";
-    } else {
-        // Check if the user has already booked the maximum number of appointments
-        $max_appointments = 6;
-        $user_email = $_SESSION['email'] ?? '';
-        if (!empty($user_email)) {
-            $count_query = "SELECT COUNT(*) AS appointment_count FROM appointment WHERE user_email = ?";
-            if ($stmt = $conn->prepare($count_query)) {
-                $stmt->bind_param("s", $user_email);
-                $stmt->execute();
-                $count_result = $stmt->get_result();
-                $count_row = $count_result->fetch_assoc();
-                $appointment_count = $count_row['appointment_count'] ?? 0;
-                $stmt->close();
+  // Check if all fields are filled
+  if (empty($_POST['service_category']) || empty($_POST['product_name']) || empty($_POST['user_name']) || empty($_POST['user_email']) || empty($_POST['appointment_date']) || empty($_POST['appointment_time'])) {
+    echo "<script>alert('Please fill in all fields')</script>";
+  } else {
+    // Check if the user has already booked the maximum number of appointments
+    $max_appointments = 6;
+    $user_email = $_SESSION['email'] ?? '';
+    if (!empty($user_email)) {
+      $count_query = "SELECT COUNT(*) AS appointment_count FROM appointment WHERE user_email = ?";
+      if ($stmt = $conn->prepare($count_query)) {
+        $stmt->bind_param("s", $user_email);
+        $stmt->execute();
+        $count_result = $stmt->get_result();
+        $count_row = $count_result->fetch_assoc();
+        $appointment_count = $count_row['appointment_count'] ?? 0;
+        $stmt->close();
 
-                if ($appointment_count >= $max_appointments) {
-                    echo "<script>alert('You have already booked the maximum number of appointments.')</script>";
-                } else {
-                    // Proceed with inserting the appointment into the database
-                    $service_category = $_POST['service_category'];
-                    $product_name = $_POST['product_name'];
-                    $user_name = $_POST['user_name'];
-                    $user_email = $_POST['user_email'];
-                    $appointment_date = $_POST['appointment_date'];
-                    $appointment_time = $_POST['appointment_time'];
-
-                    $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES (?, ?, ?, ?, ?, ?)";
-                    if ($stmt = $conn->prepare($insert_query)) {
-                        $stmt->bind_param("ssssss", $service_category, $product_name, $user_name, $user_email, $appointment_date, $appointment_time);
-                        if ($stmt->execute()) {
-                            $appointment_id = $stmt->insert_id;
-                            $appointment_code = str_pad($appointment_id, 10, '0', STR_PAD_LEFT);
-                            mysqli_query($conn, "UPDATE appointment SET id='$appointment_code' WHERE id='$appointment_id'");
-                            echo "<script>alert('Your appointment has been booked successfully. Your appointment code is: $appointment_code')</script>";
-                        } else {
-                            echo "<script>alert('Error: Unable to book appointment.')</script>";
-                        }
-                        $stmt->close();
-                    } else {
-                        echo "<script>alert('Error: Unable to prepare statement for appointment insertion.')</script>";
-                    }
-                }
-            } else {
-                echo "<script>alert('Error: Unable to prepare statement for appointment count.')</script>";
-            }
+        if ($appointment_count >= $max_appointments) {
+          echo "<script>alert('You have already booked the maximum number of appointments.')</script>";
         } else {
-            echo "<script>alert('Error: Unable to retrieve user email.')</script>";
+          // Proceed with inserting the appointment into the database
+          $service_category = $_POST['service_category'];
+          $product_name = $_POST['product_name'];
+          $user_name = $_POST['user_name'];
+          $user_email = $_POST['user_email'];
+          $appointment_date = date('Y-m-d', strtotime($_POST['appointment_date']));
+          $appointment_time = $_POST['appointment_time'];
+
+          $insert_query = "INSERT INTO appointment (service_category, product_name, user_name, user_email, appointment_date, appointment_time) VALUES (?, ?, ?, ?, ?, ?)";
+          if ($stmt = $conn->prepare($insert_query)) {
+            $stmt->bind_param("ssssss", $service_category, $product_name, $user_name, $user_email, $appointment_date, $appointment_time);
+            if ($stmt->execute()) {
+              $appointment_id = $stmt->insert_id;
+              $appointment_code = str_pad($appointment_id, 10, '0', STR_PAD_LEFT);
+              mysqli_query($conn, "UPDATE appointment SET id='$appointment_code' WHERE id='$appointment_id'");
+              echo "<script>alert('Your appointment has been booked successfully. Your appointment code is: $appointment_code')</script>";
+            } else {
+              echo "<script>alert('Error: Unable to book appointment.')</script>";
+            }
+            $stmt->close();
+          } else {
+            echo "<script>alert('Error: Unable to prepare statement for appointment insertion.')</script>";
+          }
         }
+      } else {
+        echo "<script>alert('Error: Unable to prepare statement for appointment count.')</script>";
+      }
+    } else {
+      echo "<script>alert('Error: Unable to retrieve user email.')</script>";
     }
+  }
 }
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    echo "<script>alert('Please log in first')</script>";
-    echo "<script>setTimeout(function() {
+  echo "<script>alert('Please log in first')</script>";
+  echo "<script>setTimeout(function() {
         window.location.href = 'http://localhost:80/eproject/website/index.php';
     }, 1000);</script>";
-    exit();
+  exit();
 }
 
 // Retrieve categories from the database
@@ -148,7 +148,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
         <div class="d-inline-flex align-items-center">
           <small class="py-2"><i class="far fa-clock text-primary me-2"></i>Opening Hours: Mon -
 
- Tues : 6.00 am - 10.00
+            Tues : 6.00 am - 10.00
             pm, Sunday Closed </small>
         </div>
       </div>
@@ -258,7 +258,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
               Our team of electricians and technicians holds industry-recognized certifications, ensuring that we adhere
               to the highest levels of professionalism and expertise in every
 
- project we undertake. With extensive
+              project we undertake. With extensive
               training and ongoing education, we stay at the forefront of advancements in the electrical field, allowing
               us to provide innovative solutions tailored to meet the unique needs of our clients.
             </p>
@@ -315,6 +315,7 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
                     <input type="text" class="form-control bg-light border-0 datetimepicker-input"
                       name="appointment_date" placeholder="Appointment Date" data-target="#date1"
                       data-toggle="datetimepicker" style="height: 55px;" required />
+
                   </div>
                 </div>
 
@@ -343,45 +344,58 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
 
 
   <!-- Recent Appointments Start -->
-<div class="container my-5">
+  <div class="container my-5">
     <h2 class="text-center mb-4">Recent Appointments</h2>
     <div class="row">
-        <?php
-        // Execute the query to fetch recent appointments
-        $recent_appointments_query = "SELECT * FROM appointment ORDER BY appointment_date DESC LIMIT 5";
-        $recent_appointments_result = mysqli_query($conn, $recent_appointments_query);
+      <?php
+      // Execute the query to fetch recent appointments
+      $recent_appointments_query = "SELECT * FROM appointment ORDER BY appointment_date DESC LIMIT 5";
+      $recent_appointments_result = mysqli_query($conn, $recent_appointments_query);
 
-        // Check if there are any recent appointments
-        if (mysqli_num_rows($recent_appointments_result) > 0) {
-            // Loop through each recent appointment and display it
-            while ($row = mysqli_fetch_assoc($recent_appointments_result)) {
-        ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body charts">
-                            <h5 class="card-title">Appointment ID: <?php echo $row['id']; ?></h5>
-                            <p class="card-text">Service Category: <?php echo $row['service_category']; ?></p>
-                            <p class="card-text">Product Name: <?php echo $row['product_name']; ?></p>
-                            <p class="card-text">User Name: <?php echo $row['user_name']; ?></p>
-                            <p class="card-text">Appointment Date: <?php echo $row['appointment_date']; ?></p>
-                            <p class="card-text">Appointment Time: <?php echo $row['appointment_time']; ?></p>
-                            <!-- View and Edit buttons -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                                <a href="view_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary me-md-2">View</a>
-                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Edit</a>
-                            </div>
-                        </div>
-                    </div>
+      // Check if there are any recent appointments
+      if (mysqli_num_rows($recent_appointments_result) > 0) {
+        // Loop through each recent appointment and display it
+        while ($row = mysqli_fetch_assoc($recent_appointments_result)) {
+          ?>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body charts">
+                <h5 class="card-title">Appointment ID:
+                  <?php echo $row['id']; ?>
+                </h5>
+                <p class="card-text">Service Category:
+                  <?php echo $row['service_category']; ?>
+                </p>
+                <p class="card-text">Product Name:
+                  <?php echo $row['product_name']; ?>
+                </p>
+                <p class="card-text">User Name:
+                  <?php echo $row['user_name']; ?>
+                </p>
+                <p class="card-text">Appointment Date:
+                  <?php echo date('F j, Y', strtotime($row['appointment_date'])); ?>
+                </p>
+
+                <p class="card-text">Appointment Time:
+                  <?php echo $row['appointment_time']; ?>
+                </p>
+                <!-- View and Edit buttons -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                  <a href="view_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary me-md-2">View</a>
+                  <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Edit</a>
                 </div>
-        <?php
-            }
-        } else {
-            echo "<div class='col-12'><p class='text-center'>No recent appointments found.</p></div>";
+              </div>
+            </div>
+          </div>
+          <?php
         }
-        ?>
+      } else {
+        echo "<div class='col-12'><p class='text-center'>No recent appointments found.</p></div>";
+      }
+      ?>
     </div>
-</div>
-<!-- Recent Appointments End -->
+  </div>
+  <!-- Recent Appointments End -->
 
 
 
@@ -430,7 +444,8 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
             <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Electrical Repair</a>
             <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Lighting
               Installation</a>
-            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Wiring and Rewiring</a>
+            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Wiring and
+              Rewiring</a>
             <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Electrical Panel
               Upgrades</a>
             <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Commercial Electrical
@@ -477,11 +492,12 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/en-au.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
-  
+
 </body>
 
 </html>

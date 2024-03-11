@@ -1,22 +1,17 @@
 <?php
 include "config.php";
 
-// Check if the delete button is clicked
 if (isset($_GET['delete_id'])) {
-    // Get the ID of the row to be deleted
     $delete_id = $_GET['delete_id'];
-    
-    // Construct the delete query
+
     $delete_query = "DELETE FROM appointment WHERE id = ?";
-    
-    // Prepare the delete statement
+
     $stmt = $conn->prepare($delete_query);
     $stmt->bind_param("i", $delete_id);
-    
+
     // Execute the delete statement
     if ($stmt->execute()) {
-        // Redirect to the same page after deletion
-        header("Location: ".$_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } else {
         echo "Error deleting record: " . $conn->error;
@@ -25,7 +20,6 @@ if (isset($_GET['delete_id'])) {
 
 $sql = "SELECT * FROM appointment";
 
-// Execute SQL query
 $result = $conn->query($sql);
 
 $data = [];
@@ -41,9 +35,7 @@ if ($result->num_rows > 0) {
 <html lang="en">
 
 
-<!-- Mirrored from themewagon.github.io/dashmin/table.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Jan 2024 12:43:51 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 <head>
     <meta charset="utf-8">
@@ -73,7 +65,7 @@ if ($result->num_rows > 0) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-  
+
 </head>
 
 <body>
@@ -87,8 +79,8 @@ if ($result->num_rows > 0) {
         </div>
         <!-- Spinner End -->
 
-<!-- Sidebar Start -->
-<div class="sidebar pe-4 pb-3">
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index-2.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SRS Admin</h3>
@@ -108,22 +100,14 @@ if ($result->num_rows > 0) {
                 <div class="navbar-nav w-100">
                     <a href="index-2.php" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-             
+
                     <a href="table.php" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Tables</a>
                     <a href="category.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add Category</a>
                     <a href="addproduct.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add product</a>
                     <a href="tester.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Add Tester</a>
-                    <a href="appointments.php" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Appointments</a>
-                    <!-- <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div> -->
+                    <a href="appointments.php" class="nav-item nav-link active"><i
+                            class="fa fa-table me-2"></i>Appointments</a>
+
                 </div>
             </nav>
         </div>
@@ -141,7 +125,7 @@ if ($result->num_rows > 0) {
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-             
+
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -231,7 +215,8 @@ if ($result->num_rows > 0) {
 
                 <div class="row g-4">
                     <div class="col-12">
-                        <div class="charts user_table text-center bg-light rounded h-100 p-4" style="width:100%" !important >
+                        <div class="charts user_table text-center bg-light rounded h-100 p-4" style="width:100%"
+                            !important>
                             <h6 class="mb-4">SRS Appointment Table</h6>
                             <table class="table">
                                 <thead>
@@ -250,26 +235,26 @@ if ($result->num_rows > 0) {
                                     </tr>
                                 </thead>
                                 <tbody>
-    <?php
-    // Assuming you have fetched the data from the database and stored it in an array called $data
-    // Replace this with your actual data fetching logic
-
-    // Iterate over the data and populate the table rows
-    foreach ($data as $row) {
-        echo "<tr>";
-        echo "<th scope='row'>" . $row["id"] . "</th>";
-        echo "<td>" . $row["user_name"] . "</td>";
-        echo "<td>" . $row["user_email"] . "</td>";
-        echo "<td>" . $row["product_name"] . "</td>";
-        echo "<td>" . $row["created_at"] . "</td>";
-        echo "<td>" . $row["service_category"] . "</td>";
-        echo "<td>" . $row["tester_name"] . "</td>";
-        echo "<td> <a href='table-tester.php?id=" . $row["id"] . "' class='btn table_btn_edit text-light'>Assign Tester</a> </td>";
-        echo "<td> <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");' class='btn table_btn_del text-light'>Delete</a> </td>";
-        echo "</tr>";
-    }
-    ?>
-</tbody>
+                                    <?php
+                                    // Assuming you have fetched the data from the database and stored it in an array called $data
+                                    // Replace this with your actual data fetching logic
+                                    
+                                    // Iterate over the data and populate the table rows
+                                    foreach ($data as $row) {
+                                        echo "<tr>";
+                                        echo "<th scope='row'>" . $row["id"] . "</th>";
+                                        echo "<td>" . $row["user_name"] . "</td>";
+                                        echo "<td>" . $row["user_email"] . "</td>";
+                                        echo "<td>" . $row["product_name"] . "</td>";
+                                        echo "<td>" . $row["created_at"] . "</td>";
+                                        echo "<td>" . $row["service_category"] . "</td>";
+                                        echo "<td>" . $row["tester_name"] . "</td>";
+                                        echo "<td> <a href='table-tester.php?id=" . $row["id"] . "' class='btn table_btn_edit text-light'>Assign Tester</a> </td>";
+                                        echo "<td> <a href='?delete_id=" . $row["id"] . "' onclick='return confirm(\"Are you sure you want to delete this item?\");' class='btn table_btn_del text-light'>Delete</a> </td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
 
                             </table>
                         </div>
@@ -280,7 +265,7 @@ if ($result->num_rows > 0) {
 
         </div>
     </div>
-   
+
     <!-- Table End -->
 
 

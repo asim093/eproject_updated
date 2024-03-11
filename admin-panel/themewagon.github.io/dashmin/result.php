@@ -7,6 +7,7 @@ include "config.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $product_id = $_POST['product_id'];
+    
     $test_date = $_POST['test_date'];
     $test_result = $_POST['test_result'];
     $defects_found = $_POST['defects_found'];
@@ -19,32 +20,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the insert statement
     if ($stmt->execute()) {
-        // Store data in session variables
-        $_SESSION['product_id'] = $product_id;
-        $_SESSION['test_date'] = $test_date;
-        $_SESSION['test_result'] = $test_result;
-        $_SESSION['defects_found'] = $defects_found;
-        $_SESSION['suggestions'] = $suggestions;
-
-        // Redirect to the result page
-        header("Location: result.php");
+        echo "<script>alert('Test result submitted successfully.');</script>";
+        echo "<script>window.location = window.location.href;</script>";  
         exit();
     } else {
-        // Show an alert if insertion fails
         echo "<script>alert('Failed to submit test result.');</script>";
     }
-}
+};
 
-// Retrieve the ID from the URL
 if(isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = str_pad($_GET['id'], 12, '0', STR_PAD_LEFT);
+    
 } else {
     // Redirect if the ID is not provided
     header("Location: testingshow.php");
     exit();
 }
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -119,15 +112,25 @@ if(isset($_GET['id'])) {
 </head>
 <body>
     <div class="container charts">
+        <?php if(isset($_SESSION['id'])): ?>
+        <h2>Product ID: <?php echo $_POST['row']; ?></h2>
+        <?php endif; ?>
         <h2>Submit Test Result</h2>
+       
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
+       
             <div>
                 <label for="product_id">Product ID:</label>
                 <input type="text" name="product_id" id="product_id"  value="<?= $id ?>" required>
             </div>
+            <!-- <div>
+                <label for="tester_name">Tester Name:</label>
+                <input type="text" name="tester_name" id="tester_name" required>
+            </div> -->
             <div>
                 <label for="test_date">Test Date:</label>
-                <input type="date" name="test_date" id="test_date" value="<?= date('Y-m-d') ?>" required>
+                <input type="date" name="test_date" id="test_date" value="<?= $date ?>" required>
             </div>
             <div>
                 <label for="test_result">Test Result:</label>
@@ -142,7 +145,10 @@ if(isset($_GET['id'])) {
                 <textarea name="suggestions" id="suggestions" rows="4"></textarea>
             </div>
             <button type="submit">Submit</button>
+           
         </form>
+
+ 
     </div>
 </body>
 </html>

@@ -93,7 +93,7 @@
                         <p><strong>User Email:</strong> <?php echo $appointment['user_email']; ?></p>
                         <p><strong>Appointment Date:</strong> <?php echo $appointment['appointment_date']; ?></p>
                         <p><strong>Appointment Time:</strong> <?php echo $appointment['appointment_time']; ?></p>
-                        <a href="edit_appointment.php?id=<?php echo $appointment['id']; ?>" class="btn btn-primary btn-edit">Edit</a>
+                        <a href="edit_appointment.php?id=<?php echo $appointment['id']; ?>" class="btn btn-primary btn-edit">Result</a>
                     </div>
                 </div>
         <?php
