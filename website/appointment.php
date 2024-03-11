@@ -177,14 +177,14 @@ $product_names = mysqli_fetch_all($product_result, MYSQLI_ASSOC);
     </button>
     <div class="collapse navbar-collapse text-center bg-white nav_item" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
-        <a href="http://localhost:80/eproject/website/index.php" class="nav-item nav-link active">Home</a>
+        <a href="http://localhost:80/eproject/website/index.php" class="nav-item nav-link">Home</a>
         <a href="http://localhost:80/eproject/website/about.php" class="nav-item nav-link">About</a>
         <a href="http://localhost:80/eproject/website/service.php" class="nav-item nav-link">Service</a>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
           <div class="dropdown-menu m-0">
             <a href="http://localhost:80/eproject/website/team.php" class="dropdown-item">Our Team</a>
-            <a href="http://localhost:80/eproject/website/appointment.php" class="dropdown-item">Appointment</a>
+            <a href="http://localhost:80/eproject/website/appointment.php" class="dropdown-item active">Appointment</a>
           </div>
         </div>
         <a href="http://localhost:80/eproject/website/contact.php" class="nav-item nav-link">Contact</a>

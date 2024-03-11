@@ -89,7 +89,7 @@ session_start();
     </button>
     <div class="collapse navbar-collapse text-center bg-white nav_item" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
-        <a href="http://localhost/eproject/website/index.php" class="nav-item nav-link active">Home</a>
+        <a href="http://localhost/eproject/website/index.php" class="nav-item nav-link">Home</a>
         <a href="http://localhost/eproject/website/about.php" class="nav-item nav-link">About</a>
         <a href="http://localhost/eproject/website/service.php" class="nav-item nav-link">Service</a>
         <div class="nav-item dropdown">
@@ -99,7 +99,7 @@ session_start();
             <a href="appointment.php" class="dropdown-item">Appointment</a>
           </div>
         </div>
-        <a href="http://localhost/eproject/website/contact.php" class="nav-item nav-link">Contact</a>
+        <a href="http://localhost/eproject/website/contact.php" class="nav-item nav-link active">Contact</a>
       </div>
 
       <div class="nav-item dropdown">
